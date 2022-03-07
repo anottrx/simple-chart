@@ -1,17 +1,18 @@
 import React, { useRef } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut, getElementAtEvent } from "react-chartjs-2";
+import {DOUGHNUT_COLOR} from "./data/doughnutColor"
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const data = {
-  labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+  labels: DOUGHNUT_COLOR.map(position => position.labelName),
   datasets: [
     {
       label: "# of Votes",
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: ["red", "blue", "yellow", "green", "purple", "orange"],
-      borderColor: ["red", "blue", "yellow", "green", "purple", "orange"],
+      data: DOUGHNUT_COLOR.map(position => position.data),
+      backgroundColor: DOUGHNUT_COLOR.map(position => position.backgroundColor),
+      borderColor: DOUGHNUT_COLOR.map(position => position.borderColor),
       borderWidth: 1,
     },
   ],
