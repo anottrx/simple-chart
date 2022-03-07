@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+import { Doughnut, getElementAtEvent } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -18,5 +18,11 @@ export const data = {
 };
 
 export function App() {
-  return <Doughnut data={data} />;
+const chartRef: any = useRef(null);
+
+const onClick=(event: React.MouseEvent<HTMLCanvasElement, MouseEvent>)=> {
+  alert(data.labels[getElementAtEvent((chartRef.current), event)[0].index])
+}
+
+  return <Doughnut data={data} ref={chartRef} onClick={onClick} />;
 }
