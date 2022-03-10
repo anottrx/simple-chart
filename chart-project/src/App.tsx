@@ -1,11 +1,15 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import IndexPage from "./pages/IndexPage";
+import ResultPage from "./pages/ResultPage";
 
 function App() {
   return (
     <BrowserRouter>
-      <Route exact path="/" component={IndexPage} />
+      <Switch>
+        <Route exact path="/" component={IndexPage} />
+        <Route exact path="/result" component={ResultPage} />
+      </Switch>
     </BrowserRouter>
   );
 }
