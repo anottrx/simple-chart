@@ -4,9 +4,7 @@ import { ResultData } from "../data/resultData";
 const Item = (data: ResultData) => {
   return (
     <li>
-      gender: {data.gender} / age: {data.age} / salary: {data.salary} <br />
-      workplace: {data.workplace} / drinks: {data.drinks} / mobile:{" "}
-      {data.mobile} <br />
+      question: {data.question} result:{data.result}
     </li>
   );
 };
@@ -38,8 +36,12 @@ const ResultPage: React.FC = () => {
       {data && (
         <ul>
           {data.map((data) => (
-            <Item key={`${data.id}`} gender={data.gender} age={data.age} salary={data.salary}
-              workplace={data.workplace} drinks={data.drinks} mobile={data.mobile} id={data.id} />
+            <Item
+              key={`${data.id}`}
+              question={data.question}
+              id={data.id}
+              result={data.result}
+            />
           ))}
         </ul>
       )}
