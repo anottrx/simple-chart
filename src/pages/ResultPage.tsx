@@ -1,10 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
-import { AnswerObject, ResultData, RESULT_DATA } from "../data/resultData";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut, getElementAtEvent } from "react-chartjs-2";
 import styled from "@emotion/styled";
-import { Container, Paper } from "@mui/material";
+import { Container, Paper, Card } from "@mui/material";
 import FooterButtons from "../components/FooterButtons";
+import { AnswerObject, ResultData, RESULT_DATA } from "../data/resultData";
+import { COLOR_DATA } from "../data/colorData";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -25,8 +26,8 @@ function makeChart(id: number) {
       {
         label: "# of Votes",
         data: makeArray2(id),
-        backgroundColor: ["yellow", "green", "blue"],
-        borderColor: "blue",
+        backgroundColor: COLOR_DATA.map(x => x.backgroundColor),
+        borderColor: COLOR_DATA.map(x => x.borderColor),
         borderWidth: 2,
       },
     ],
