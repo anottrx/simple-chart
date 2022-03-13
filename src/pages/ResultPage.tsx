@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+import { Doughnut, Pie } from "react-chartjs-2";
 import styled from "@emotion/styled";
 import { Container, Card } from "@mui/material";
 import FooterButtons from "../components/FooterButtons";
@@ -8,7 +8,6 @@ import { ResultData, RESULT_DATA } from "../data/resultData";
 import { COLOR_DATA } from "../data/colorData";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
 
 function makeChart(id: number) {
   console.log(id);
@@ -18,8 +17,8 @@ function makeChart(id: number) {
       {
         label: "# of Votes",
         data: makeArray2(id),
-        backgroundColor: COLOR_DATA.map(x => x.backgroundColor),
-        borderColor: COLOR_DATA.map(x => x.borderColor),
+        backgroundColor: COLOR_DATA.map((x) => x.backgroundColor),
+        borderColor: COLOR_DATA.map((x) => x.borderColor),
         borderWidth: 2,
       },
     ],
@@ -63,16 +62,23 @@ const ResultPage: React.FC = () => {
       <h1>통계</h1>
       {data && (
         <DataContainer>
-          {data.map((data) => (
-            <DataCard variant="outlined">
-              <h2>{data.question}</h2>
-              <Doughnut
-                key={data.id}
-                data={makeChart(data.id)}
-                ref={chartRef}
-              />
-            </DataCard>
-          ))}
+          {data.map((data) =>
+            data.id === 2 || data.id === 6 ? (
+              <DataCard variant="outlined">
+                <h2>{data.question}</h2>
+                <Pie key={data.id} data={makeChart(data.id)} ref={chartRef} />
+              </DataCard>
+            ) : (
+              <DataCard variant="outlined">
+                <h2>{data.question}</h2>
+                <Doughnut
+                  key={data.id}
+                  data={makeChart(data.id)}
+                  ref={chartRef}
+                />
+              </DataCard>
+            )
+          )}
         </DataContainer>
       )}
       <FooterButtons />
