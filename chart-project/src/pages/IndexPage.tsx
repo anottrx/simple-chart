@@ -9,6 +9,10 @@ const IndexPage: React.FC = () => {
       <Button variant="outlined">
         <Link to="/result">통계 보기</Link>
       </Button>
+      <br />
+      <Button variant="contained" color="success">
+        <Link to="/learn">기초페이지로 이동하기</Link>
+      </Button>
     </>
   );
 };
