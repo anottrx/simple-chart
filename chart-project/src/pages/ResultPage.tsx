@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import { AnswerObject, ResultData, RESULT_DATA } from "../data/resultData";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut, getElementAtEvent } from "react-chartjs-2";
+import styled from "@emotion/styled";
+import { Container, Paper } from "@mui/material";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -24,7 +26,7 @@ function makeChart(id: number) {
         data: makeArray2(id),
         backgroundColor: ["yellow", "green", "blue"],
         borderColor: "blue",
-        borderWidth: 10,
+        borderWidth: 2,
       },
     ],
   };
@@ -68,21 +70,20 @@ const ResultPage: React.FC = () => {
 
   return (
     <div>
-      ResultPage
-      <br />
+      <h1>통계</h1>
       {data && (
-        <ul>
+        <DataContainer>
           {data.map((data) => (
-            <>
-              <div>{data.question}</div>
+            <DataPaper elevation={1}>
+              <h2>{data.question}</h2>
               <Doughnut
                 key={data.id}
                 data={makeChart(data.id)}
                 ref={chartRef}
               />
-            </>
+            </DataPaper>
           ))}
-        </ul>
+        </DataContainer>
         // <ul>
         //   {data.map((data) => (
         //     <Item
@@ -98,3 +99,16 @@ const ResultPage: React.FC = () => {
 };
 
 export default ResultPage;
+
+const DataContainer = styled.div`
+  max-width: 900px;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const DataPaper = styled(Paper)`
+  width: 360px;
+  padding: 4px;
+  margin-bottom: 16px;
+  margin-right: 16px;
+`;
