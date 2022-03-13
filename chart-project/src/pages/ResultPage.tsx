@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { AnswerObject, ResultData, RESULT_DATA } from "../data/resultData";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut, getElementAtEvent } from "react-chartjs-2";
@@ -50,7 +50,7 @@ const ResultPage: React.FC = () => {
   //   alert(data.labels[getElementAtEvent(chartRef.current, event)[0].index]);
   // };
 
-  const handleClick = () => {
+  useEffect(() => {
     fetch("/result")
       .then((response) => {
         return response.json();
@@ -64,13 +64,12 @@ const ResultPage: React.FC = () => {
       .catch((error) => {
         alert(`Something Wrong: ${error}`);
       });
-  };
+  }, []);
 
   return (
     <div>
       ResultPage
       <br />
-      <button onClick={handleClick}>데이터 가져오기</button>
       {data && (
         <ul>
           {data.map((data) => (
