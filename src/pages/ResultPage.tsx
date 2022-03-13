@@ -1,22 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut, getElementAtEvent } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 import styled from "@emotion/styled";
-import { Container, Paper, Card } from "@mui/material";
+import { Container, Card } from "@mui/material";
 import FooterButtons from "../components/FooterButtons";
-import { AnswerObject, ResultData, RESULT_DATA } from "../data/resultData";
+import { ResultData, RESULT_DATA } from "../data/resultData";
 import { COLOR_DATA } from "../data/colorData";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const Item = (data: ResultData) => {
-  return (
-    <li>
-      question: {data.question}
-      result:{data.result}
-    </li>
-  );
-};
 
 function makeChart(id: number) {
   console.log(id);
@@ -50,10 +42,6 @@ const ResultPage: React.FC = () => {
 
   const chartRef = useRef<any>();
 
-  // const onClick = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-  //   alert(data.labels[getElementAtEvent(chartRef.current, event)[0].index]);
-  // };
-
   useEffect(() => {
     fetch("/result")
       .then((response) => {
@@ -76,25 +64,16 @@ const ResultPage: React.FC = () => {
       {data && (
         <DataContainer>
           {data.map((data) => (
-            <DataPaper elevation={1}>
+            <DataCard variant="outlined">
               <h2>{data.question}</h2>
               <Doughnut
                 key={data.id}
                 data={makeChart(data.id)}
                 ref={chartRef}
               />
-            </DataPaper>
+            </DataCard>
           ))}
         </DataContainer>
-        // <ul>
-        //   {data.map((data) => (
-        //     <Item
-        //       key={`${data.id}`}
-        //       question={data.question}
-        //       id={data.id} result={data.result}              // result={data.result}
-        //     />
-        //   ))}
-        // </ul>
       )}
       <FooterButtons />
     </div>
@@ -103,13 +82,12 @@ const ResultPage: React.FC = () => {
 
 export default ResultPage;
 
-const DataContainer = styled.div`
-  max-width: 900px;
+const DataContainer = styled(Container)`
   display: flex;
   flex-wrap: wrap;
 `;
 
-const DataPaper = styled(Paper)`
+const DataCard = styled(Card)`
   width: 360px;
   padding: 4px;
   margin-bottom: 16px;
