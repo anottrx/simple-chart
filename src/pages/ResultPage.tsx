@@ -4,6 +4,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut, getElementAtEvent } from "react-chartjs-2";
 import styled from "@emotion/styled";
 import { Container, Paper } from "@mui/material";
+import FooterButtons from "../components/FooterButtons";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -94,6 +95,7 @@ const ResultPage: React.FC = () => {
         //   ))}
         // </ul>
       )}
+      <FooterButtons />
     </div>
   );
 };
