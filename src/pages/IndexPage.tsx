@@ -6,6 +6,7 @@ const IndexPage: React.FC = () => {
   return (
     <>
       <div>당신의 유형은...</div>
+      <div>1순위는 ㅇㅇㅇ</div>
       <Button variant="outlined">
         <Link to="/result">통계 보기</Link>
       </Button>
