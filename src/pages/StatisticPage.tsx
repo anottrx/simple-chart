@@ -1,6 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut, Pie } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartOptions,
+  ChartData,
+} from "chart.js";
+import { Doughnut, Pie, Bar } from "react-chartjs-2";
 import styled from "@emotion/styled";
 import { Container, Card, CardHeader, CardContent } from "@mui/material";
 import FooterButtons from "../components/FooterButtons";
@@ -10,7 +21,15 @@ import { STATISTIC_DATA } from "../mocks/database/chart";
 import { COLOR_CHART_DATA } from "../data/chartColorData";
 import styles from "./Chart.module.css";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const doughnut_question = [2, 4, 5, 6];
 
@@ -31,7 +50,9 @@ function makeChart(id: number) {
 }
 
 function makeArray(id: number) {
-  const answerList = STATISTIC_DATA[id - 1].options.map((x) => x.optionDescription);
+  const answerList = STATISTIC_DATA[id - 1].options.map(
+    (x) => x.optionDescription
+  );
   return answerList;
 }
 
@@ -40,10 +61,101 @@ function makeArray2(id: number) {
   return dataList;
 }
 
+function makeBarChart(id: number): ChartData<"bar", number[], unknown> {
+  const stateTemp = {
+    labels: makeArray(id),
+    datasets: [
+      {
+        label: "응답자 전체",
+        backgroundColor: COLOR_CHART_DATA[3].backgroundColor,
+        borderColor: "rgba(0,0,0,1)",
+        borderWidth: 0,
+        data: makeArray2(id),
+      },
+    ],
+  };
+  return stateTemp;
+  // throw new Error("Function not implemented.");
+}
+
 const StatisticPage: React.FC = () => {
   const [data, setData] = useState<StatisticData[] | null>(null);
 
   const chartRef = useRef<any>();
+
+  const barOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "Chart.js Bar Chart",
+      },
+    },
+  };
+
+  const labelsTemp = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+  ];
+
+  // const stateTemp = {
+  //   labels: ["January", "February", "March", "April", "May"],
+  //   datasets: [
+  //     {
+  //       label: "Rainfall",
+  //       backgroundColor: "rgba(75,192,192,1)",
+  //       borderColor: "rgba(0,0,0,1)",
+  //       borderWidth: 2,
+  //       data: [65, 59, 80, 81, 56],
+  //     },
+  //   ],
+  // };
+
+  const optionsTemp: any = {
+    responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 2,
+    plugins: {
+      // title: {
+      //   display: true,
+      //   text: "Average Rainfall per month",
+      //   fontSize: 20,
+      // },
+      // legend: {
+      //   display: true,
+      //   position: "right",
+      // },
+    },
+  };
+
+  const dataTemp = {
+    labelsTemp,
+    datasets: [
+      {
+        label: "Dataset 1",
+        data: [65, 59, 80, 81, 56],
+        borderColor: "rgba(0,0,0,1)",
+        borderWidth: 2,
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+      // {
+      //   label: "Dataset 2",
+      //   data: labelsTemp.map(() =>
+      //     STATISTIC_DATA[11].options.map((x) => x.optionCount)
+      //   ),
+      //   backgroundColor: "rgba(53, 162, 235, 0.5)",
+      // },
+    ],
+  };
 
   useEffect(() => {
     fetch("/statistics")
@@ -67,21 +179,27 @@ const StatisticPage: React.FC = () => {
       {data && (
         <div className={styles.container}>
           {data.map((data) =>
-            !doughnut_question.includes(data.id) ? (
+            doughnut_question.includes(data.id) ? (
               <CardChart variant="outlined" className={styles.card_chart}>
                 <h4 className={styles.card_question}>{data.question}</h4>
                 <CardContentChart className={styles.card_content}>
-                  <Pie key={data.id} data={makeChart(data.id)} ref={chartRef} />
+                  <Doughnut
+                    key={data.id}
+                    data={makeChart(data.id)}
+                    ref={chartRef}
+                  />
                 </CardContentChart>
               </CardChart>
             ) : (
               <CardChart variant="outlined" className={styles.card_chart}>
                 <h4 className={styles.card_question}>{data.question}</h4>
-                <Doughnut
+                <Bar options={optionsTemp} data={makeBarChart(data.id)} />
+                {/* <Bar options={optionsTemp} data={stateTemp} /> */}
+                {/* <Bar
                   key={data.id}
-                  data={makeChart(data.id)}
-                  ref={chartRef}
-                />
+                  data={makeBarChart(data.id)}
+                  options={barOptions}
+                /> */}
               </CardChart>
             )
           )}
