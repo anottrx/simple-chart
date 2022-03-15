@@ -2,24 +2,24 @@ import React, { useRef, useState, useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut, Pie } from "react-chartjs-2";
 import styled from "@emotion/styled";
-import { Container, Card } from "@mui/material";
+import { Container, Card, CardHeader, CardContent } from "@mui/material";
 import FooterButtons from "../components/FooterButtons";
 import { ResultData, RESULT_DATA } from "../data/resultData";
-import { COLOR_DATA } from "../data/colorData";
+import { COLOR_CHART_DATA } from "../data/chartColorData";
+import styles from "./Chart.module.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function makeChart(id: number) {
-  console.log(id);
   const doughnut_data = {
     labels: makeArray(id),
     datasets: [
       {
         label: "# of Votes",
         data: makeArray2(id),
-        backgroundColor: COLOR_DATA.map((x) => x.backgroundColor),
-        borderColor: COLOR_DATA.map((x) => x.borderColor),
-        borderWidth: 2,
+        backgroundColor: COLOR_CHART_DATA.map((x) => x.backgroundColor),
+        borderColor: COLOR_CHART_DATA.map((x) => x.borderColor),
+        borderWidth: 0,
       },
     ],
   };
@@ -58,28 +58,30 @@ const StatisticPage: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.background}>
       <h1>통계</h1>
       {data && (
-        <DataContainer>
+        <div className={styles.container}>
           {data.map((data) =>
             data.id === 2 || data.id === 6 ? (
-              <DataCard variant="outlined">
-                <h2>{data.question}</h2>
-                <Pie key={data.id} data={makeChart(data.id)} ref={chartRef} />
-              </DataCard>
+              <CardChart variant="outlined" className={styles.card_chart}>
+                <h4 className={styles.card_question}>{data.question}</h4>
+                <CardContentChart className={styles.card_content}>
+                  <Pie key={data.id} data={makeChart(data.id)} ref={chartRef} />
+                </CardContentChart>
+              </CardChart>
             ) : (
-              <DataCard variant="outlined">
-                <h2>{data.question}</h2>
+              <CardChart variant="outlined" className={styles.card_chart}>
+                <h4 className={styles.card_question}>{data.question}</h4>
                 <Doughnut
                   key={data.id}
                   data={makeChart(data.id)}
                   ref={chartRef}
                 />
-              </DataCard>
+              </CardChart>
             )
           )}
-        </DataContainer>
+        </div>
       )}
       <FooterButtons />
     </div>
@@ -88,14 +90,10 @@ const StatisticPage: React.FC = () => {
 
 export default StatisticPage;
 
-const DataContainer = styled(Container)`
-  display: flex;
-  flex-wrap: wrap;
+const CardChart = styled(Card)`
+  background-color: #0f0e1e;
 `;
 
-const DataCard = styled(Card)`
-  width: 360px;
-  padding: 4px;
-  margin-bottom: 16px;
-  margin-right: 16px;
+const CardContentChart = styled(CardContent)`
+  padding: 24px 0px 24px 40px;
 `;
