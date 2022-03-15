@@ -12,6 +12,7 @@ import {
   ChartData,
 } from "chart.js";
 import { Doughnut, Pie, Bar } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import styled from "@emotion/styled";
 import { Container, Card, CardHeader, CardContent } from "@mui/material";
 import FooterButtons from "../components/FooterButtons";
@@ -28,7 +29,8 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  ChartDataLabels
 );
 
 const doughnut_question = [2, 4, 5, 6];
@@ -82,6 +84,32 @@ const StatisticPage: React.FC = () => {
   const [data, setData] = useState<StatisticData[] | null>(null);
 
   const chartRef = useRef<any>();
+
+  const doughnutOptions = {
+    // plugins: {
+    datalabels: {
+      // backgroundColor: function(context) {
+      //   return context.dataset.backgroundColor;
+      // },
+      borderColor: "white",
+      borderRadius: 25,
+      borderWidth: 2,
+      color: "white",
+      display: true,
+      // display: function(context) {
+      //   var dataset = context.dataset;
+      //   var count = dataset.data.length;
+      //   var value = dataset.data[context.dataIndex];
+      //   return value > count * 1.5;
+      // },
+      font: {
+        weight: "bold",
+      },
+      padding: 6,
+      // formatter: Math.round
+    },
+    // },
+  };
 
   const barOptions = {
     responsive: true,
@@ -186,6 +214,21 @@ const StatisticPage: React.FC = () => {
                   <Doughnut
                     key={data.id}
                     data={makeChart(data.id)}
+                    // options ={doughnutOptions}
+
+                    // options={{
+                    //   plugins: {
+                    //     datalabels: {
+                    //       // display: false,
+                    //       color: "red",
+                    //       font: {
+                    //         size: 14,
+                    //         weight: "bold",
+                    //       },
+                    //     },
+                    //   },
+                    // }}
+                    plugins={[ChartDataLabels]}
                     ref={chartRef}
                   />
                 </CardContentChart>
