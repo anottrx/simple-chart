@@ -4,11 +4,15 @@ import { Doughnut, Pie } from "react-chartjs-2";
 import styled from "@emotion/styled";
 import { Container, Card, CardHeader, CardContent } from "@mui/material";
 import FooterButtons from "../components/FooterButtons";
-import { ResultData, RESULT_DATA } from "../data/resultData";
+import { StatisticData } from "../types/chartTypes";
+import { STATISTIC_DATA } from "../mocks/database/chart";
+// import { ResultData, RESULT_DATA } from "../data/resultData";
 import { COLOR_CHART_DATA } from "../data/chartColorData";
 import styles from "./Chart.module.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
+
+const doughnut_question = [2, 4, 5, 6];
 
 function makeChart(id: number) {
   const doughnut_data = {
@@ -27,22 +31,22 @@ function makeChart(id: number) {
 }
 
 function makeArray(id: number) {
-  const answerList = RESULT_DATA[id - 1].result.map((x) => x.answer);
+  const answerList = STATISTIC_DATA[id - 1].options.map((x) => x.optionDescription);
   return answerList;
 }
 
 function makeArray2(id: number) {
-  const dataList = RESULT_DATA[id - 1].result.map((x) => x.data);
+  const dataList = STATISTIC_DATA[id - 1].options.map((x) => x.optionCount);
   return dataList;
 }
 
 const StatisticPage: React.FC = () => {
-  const [data, setData] = useState<ResultData[] | null>(null);
+  const [data, setData] = useState<StatisticData[] | null>(null);
 
   const chartRef = useRef<any>();
 
   useEffect(() => {
-    fetch("/result")
+    fetch("/statistics")
       .then((response) => {
         return response.json();
       })
@@ -50,7 +54,7 @@ const StatisticPage: React.FC = () => {
         if (json.errorMessage) {
           throw new Error(json.errorMessage);
         }
-        setData(json.RESULT_DATA);
+        setData(json.STATISTIC_DATA);
       })
       .catch((error) => {
         alert(`Something Wrong: ${error}`);
@@ -63,7 +67,7 @@ const StatisticPage: React.FC = () => {
       {data && (
         <div className={styles.container}>
           {data.map((data) =>
-            data.id === 2 || data.id === 6 ? (
+            !doughnut_question.includes(data.id) ? (
               <CardChart variant="outlined" className={styles.card_chart}>
                 <h4 className={styles.card_question}>{data.question}</h4>
                 <CardContentChart className={styles.card_content}>
