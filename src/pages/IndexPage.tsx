@@ -8,7 +8,7 @@ const IndexPage: React.FC = () => {
       <div>당신의 유형은...</div>
       <div>1순위는 ㅇㅇㅇ</div>
       <Button variant="outlined">
-        <Link to="/result">통계 결과 보기</Link>
+        <Link to="/chart">통계 결과 보기</Link>
       </Button>
       <br />
       <Button variant="contained">
