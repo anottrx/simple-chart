@@ -3,29 +3,15 @@ h1 {
   margin: 0;
   padding: 0;
   font-family: "Noto Sans KR", sans-serif;
+  text-align: center;
 }
 .background {
-  background-color: #040411;
+  background-color: #030415;
 }
 .background h1 {
   color: #ffffff;
 }
-.container {
-  margin: 0;
-  /* display: flex;
-  flex-wrap: wrap; */
-}
-.card_chart {
-  /* display: flex;
-  flex-direction: column; */
-  /* min-width: 432px;
-  max-width: 886px; */
-  margin: 0;
-  padding: 0px 12px 24px;
 
-  /* background-color: #0f0e1e;
-  color: #0f0e1e; */
-}
 .card_title_content {
   /* display: inline; */
   padding: 24px 24px 48px;

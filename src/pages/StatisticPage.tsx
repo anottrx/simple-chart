@@ -14,7 +14,7 @@ import {
 import { Doughnut, Pie, Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import styled from "@emotion/styled";
-import { Container, Card, CardHeader, CardContent } from "@mui/material";
+import { Container, Card, CardHeader, CardContent, Grid } from "@mui/material";
 import FooterButtons from "../components/FooterButtons";
 import { StatisticData } from "../types/chartTypes";
 import { STATISTIC_DATA } from "../mocks/database/chart";
@@ -208,10 +208,10 @@ const StatisticPage: React.FC = () => {
     <div className={styles.background}>
       <h1>통계</h1>
       {data && (
-        <ChartContainer className={styles.container}>
+        <ChartContainer>
           {data.map((data) =>
             doughnut_question.includes(data.id) ? (
-              <CardChart variant="outlined" className={styles.card_chart}>
+              <CardChart variant="outlined">
                 <div className={styles.card_title_content}>
                   <h2 className={styles.card_question}>{data.question}</h2>
                   <CardContentChart className={styles.card_content}>
@@ -224,7 +224,7 @@ const StatisticPage: React.FC = () => {
                             formatter: function (value, context) {
                               return (
                                 value +
-                                "%\n" + 
+                                "%\n" +
                                 context.chart.data.labels?.slice(
                                   context.dataIndex,
                                   context.dataIndex + 1
@@ -262,7 +262,7 @@ const StatisticPage: React.FC = () => {
                 </div>
               </CardChart>
             ) : (
-              <CardChart variant="outlined" className={styles.card_chart}>
+              <CardChart variant="outlined">
                 <div className={styles.card_title_content}>
                   <h2 className={styles.card_question}>{data.question}</h2>
                   <Bar options={optionsTemp} data={makeBarChart(data.id)} />
@@ -288,22 +288,65 @@ export default StatisticPage;
 const ChartContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 
-  @media (max-width: 1022px) {
-    display: inline;
+  margin: 0;
+  max-width: 900px;
+
+  @media screen and (max-width: 900px) {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    margin: 0;
+  }
+  @media screen and (max-width: 767px) {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0;
   }
 `;
 
 const CardChart = styled(Card)`
   /* width: 48%; */
   /* flex: 1; */
+  /* width: 47%; */
+  margin: 0;
+  overflow: hidden;
+  /* padding: 0px 12px 24px; */
+  /* background-color: #0f0e1e; */
+   background-color: #121328;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   width: 47%;
-  background-color: #0f0e1e;
-  @media (max-width: 1022px) {
+  @media screen and (max-width: 900px) {
+    width: 47%;
+    /* display: block; */
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #d63d3d;
+  }
+  @media screen and (max-width: 767px) {
+    /* width: 45%; */
+    /* display: block; */
+    /* justify-content: center; */
+    /* flex-wrap: wrap; */
     width: 100%;
-    /* flex: 0; */
-    /* background-color: #ffffff; */
+    background-color: #ffffff;
+  }
+  @media screen and (max-width: 575px) {
+    width: 100%;
+    display: block;
+    /* display: inline; */
+    background-color: #515897;
   }
 `;
 
