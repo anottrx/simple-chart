@@ -222,7 +222,14 @@ const StatisticPage: React.FC = () => {
                         plugins: {
                           datalabels: {
                             formatter: function (value, context) {
-                              return value + "%";
+                              return (
+                                value +
+                                "%\n" + 
+                                context.chart.data.labels?.slice(
+                                  context.dataIndex,
+                                  context.dataIndex + 1
+                                )
+                              );
                             },
                             labels: {
                               value: {
