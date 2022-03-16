@@ -185,6 +185,8 @@ const ChartContainer = styled.div`
   display: flex;
   max-width: 900px;
   margin: 0;
+  padding: 0;
+  
   flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
@@ -201,6 +203,7 @@ const ChartContainer = styled.div`
   } */
   @media screen and (max-width: 767px) {
     display: inline-block;
+    background-color: #121328;
     /* display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -249,5 +252,6 @@ const CardChart = styled(Card)`
 `;
 
 const CardContentChart = styled(CardContent)`
-  padding: 24px 0px 24px 40px;
+  /* padding: 24px 0px 24px 40px; */
+  padding: 0px;
 `;

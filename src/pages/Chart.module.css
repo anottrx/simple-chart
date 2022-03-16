@@ -21,6 +21,8 @@ h1 {
 
 .card_title_content {
   display: flex;
+  padding: 24px 24px 48px;
+
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
