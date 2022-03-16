@@ -205,48 +205,52 @@ const StatisticPage: React.FC = () => {
     <div className={styles.background}>
       <h1>통계</h1>
       {data && (
-        <div className={styles.container}>
+        <ChartContainer className={styles.container}>
           {data.map((data) =>
             doughnut_question.includes(data.id) ? (
               <CardChart variant="outlined" className={styles.card_chart}>
-                <h4 className={styles.card_question}>{data.question}</h4>
-                <CardContentChart className={styles.card_content}>
-                  <Doughnut
-                    key={data.id}
-                    data={makeChart(data.id)}
-                    // options ={doughnutOptions}
+                <div className={styles.card_title_content}>
+                  <h2 className={styles.card_question}>{data.question}</h2>
+                  <CardContentChart className={styles.card_content}>
+                    <Doughnut
+                      key={data.id}
+                      data={makeChart(data.id)}
+                      // options ={doughnutOptions}
 
-                    // options={{
-                    //   plugins: {
-                    //     datalabels: {
-                    //       // display: false,
-                    //       color: "red",
-                    //       font: {
-                    //         size: 14,
-                    //         weight: "bold",
-                    //       },
-                    //     },
-                    //   },
-                    // }}
-                    plugins={[ChartDataLabels]}
-                    ref={chartRef}
-                  />
-                </CardContentChart>
+                      // options={{
+                      //   plugins: {
+                      //     datalabels: {
+                      //       // display: false,
+                      //       color: "red",
+                      //       font: {
+                      //         size: 14,
+                      //         weight: "bold",
+                      //       },
+                      //     },
+                      //   },
+                      // }}
+                      plugins={[ChartDataLabels]}
+                      ref={chartRef}
+                    />
+                  </CardContentChart>
+                </div>
               </CardChart>
             ) : (
               <CardChart variant="outlined" className={styles.card_chart}>
-                <h4 className={styles.card_question}>{data.question}</h4>
-                <Bar options={optionsTemp} data={makeBarChart(data.id)} />
-                {/* <Bar options={optionsTemp} data={stateTemp} /> */}
-                {/* <Bar
+                <div className={styles.card_title_content}>
+                  <h2 className={styles.card_question}>{data.question}</h2>
+                  <Bar options={optionsTemp} data={makeBarChart(data.id)} />
+                  {/* <Bar options={optionsTemp} data={stateTemp} /> */}
+                  {/* <Bar
                   key={data.id}
                   data={makeBarChart(data.id)}
                   options={barOptions}
                 /> */}
+                </div>
               </CardChart>
             )
           )}
-        </div>
+        </ChartContainer>
       )}
       <FooterButtons />
     </div>
@@ -255,8 +259,26 @@ const StatisticPage: React.FC = () => {
 
 export default StatisticPage;
 
+const ChartContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  
+  @media (max-width: 1022px) {
+    display: inline;
+    width: 100%;
+  }
+`;
+
 const CardChart = styled(Card)`
+  /* width: 48%; */
+  /* flex: 1; */
+  width: 47%;
   background-color: #0f0e1e;
+  @media (max-width: 1022px) {
+    width: 100%;
+    /* flex: 0; */
+    /* background-color: #ffffff; */
+  }
 `;
 
 const CardContentChart = styled(CardContent)`
