@@ -2,33 +2,36 @@ body,
 h1 {
   margin: 0;
   padding: 0;
+  font-family: "Noto Sans KR", sans-serif;
+  text-align: center;
 }
 .background {
-  background-color: #040411;
+  display: flex;
+  margin: 0;
+  padding: 0px 16px;
+  background-color: #030415;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 .background h1 {
   color: #ffffff;
 }
-.container {
-  display: flex;
-  flex-wrap: wrap;
-}
-.card_chart {
+
+.card_title_content {
   display: flex;
   flex-direction: column;
-  min-width: 432px;
-  max-width: 886px;
-  margin: 0;
-  padding: 0px;
-  /* background-color: #0f0e1e;
-  color: #0f0e1e; */
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 .card_question {
-  color: #ffffff;
+  display: flex;
   margin: 24px 0px 16px 0px;
   padding: 0px 4px 0px 0px;
   font-size: 20px;
+  justify-content: center;
+  color: #ffffff;
 }
-/* .card_content {
-  padding: 24px 40px 24px 0px;
-} */
