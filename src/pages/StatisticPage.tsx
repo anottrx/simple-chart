@@ -8,17 +8,16 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartOptions,
+  // ChartOptions,
   ChartData,
 } from "chart.js";
-import { Doughnut, Pie, Bar } from "react-chartjs-2";
+import { Doughnut, Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import styled from "@emotion/styled";
 import { Container, Card, CardHeader, CardContent, Grid } from "@mui/material";
 import FooterButtons from "../components/FooterButtons";
 import { StatisticData } from "../types/chartTypes";
 import { STATISTIC_DATA } from "../mocks/database/chart";
-// import { ResultData, RESULT_DATA } from "../data/resultData";
 import { COLOR_CHART_DATA } from "../data/chartColorData";
 import styles from "./Chart.module.css";
 
@@ -88,69 +87,6 @@ const StatisticPage: React.FC = () => {
 
   const chartRef = useRef<any>();
 
-  const doughnutOptions = {
-    // plugins: {
-    datalabels: {
-      // backgroundColor: function(context) {
-      //   return context.dataset.backgroundColor;
-      // },
-      borderColor: "white",
-      borderRadius: 25,
-      borderWidth: 2,
-      color: "white",
-      display: true,
-      // display: function(context) {
-      //   var dataset = context.dataset;
-      //   var count = dataset.data.length;
-      //   var value = dataset.data[context.dataIndex];
-      //   return value > count * 1.5;
-      // },
-      font: {
-        weight: "bold",
-      },
-      padding: 6,
-      // formatter: Math.round
-    },
-    // },
-  };
-
-  const barOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: true,
-        position: "top" as const,
-      },
-      title: {
-        display: true,
-        text: "Chart.js Bar Chart",
-      },
-    },
-  };
-
-  const labelsTemp = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ];
-
-  // const stateTemp = {
-  //   labels: ["January", "February", "March", "April", "May"],
-  //   datasets: [
-  //     {
-  //       label: "Rainfall",
-  //       backgroundColor: "rgba(75,192,192,1)",
-  //       borderColor: "rgba(0,0,0,1)",
-  //       borderWidth: 2,
-  //       data: [65, 59, 80, 81, 56],
-  //     },
-  //   ],
-  // };
-
   const optionsTemp: any = {
     responsive: true,
     maintainAspectRatio: true,
@@ -166,26 +102,6 @@ const StatisticPage: React.FC = () => {
       //   position: "right",
       // },
     },
-  };
-
-  const dataTemp = {
-    labelsTemp,
-    datasets: [
-      {
-        label: "Dataset 1",
-        data: [65, 59, 80, 81, 56],
-        borderColor: "rgba(0,0,0,1)",
-        borderWidth: 2,
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-      // {
-      //   label: "Dataset 2",
-      //   data: labelsTemp.map(() =>
-      //     STATISTIC_DATA[11].options.map((x) => x.optionCount)
-      //   ),
-      //   backgroundColor: "rgba(53, 162, 235, 0.5)",
-      // },
-    ],
   };
 
   useEffect(() => {
@@ -241,20 +157,6 @@ const StatisticPage: React.FC = () => {
                           },
                         },
                       }}
-                      // options ={doughnutOptions}
-
-                      // options={{
-                      //   plugins: {
-                      //     datalabels: {
-                      //       // display: false,
-                      //       color: "red",
-                      //       font: {
-                      //         size: 14,
-                      //         weight: "bold",
-                      //       },
-                      //     },
-                      //   },
-                      // }}
                       // plugins={[ChartDataLabels]}
                       ref={chartRef}
                     />
@@ -266,12 +168,6 @@ const StatisticPage: React.FC = () => {
                 <div className={styles.card_title_content}>
                   <h2 className={styles.card_question}>{data.question}</h2>
                   <Bar options={optionsTemp} data={makeBarChart(data.id)} />
-                  {/* <Bar options={optionsTemp} data={stateTemp} /> */}
-                  {/* <Bar
-                  key={data.id}
-                  data={makeBarChart(data.id)}
-                  options={barOptions}
-                /> */}
                 </div>
               </CardChart>
             )
@@ -287,66 +183,68 @@ export default StatisticPage;
 
 const ChartContainer = styled.div`
   display: flex;
+  max-width: 900px;
+  margin: 0;
   flex-wrap: wrap;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 
-  margin: 0;
-  max-width: 900px;
-
-  @media screen and (max-width: 900px) {
-    margin: 0;
+  /* @media screen and (max-width: 900px) {
     display: flex;
+    width: 100%;
     flex-wrap: wrap;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    margin: 0;
-  }
+    background-color: #d63d3d;
+  } */
   @media screen and (max-width: 767px) {
-    display: flex;
+    display: inline-block;
+    /* display: flex;
     flex-wrap: wrap;
-    width: 100%;
-    margin: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; */
+  }
+  @media screen and (max-width: 575px) {
+    display: inline-block;
+    background-color: #121328;
+    /* background-color: #515897; */
   }
 `;
 
 const CardChart = styled(Card)`
-  /* width: 48%; */
-  /* flex: 1; */
-  /* width: 47%; */
-  margin: 0;
-  overflow: hidden;
-  /* padding: 0px 12px 24px; */
-  /* background-color: #0f0e1e; */
-   background-color: #121328;
   display: flex;
+  width: 47%;
+  min-height: 400px;
+  margin: 0;
+  border: 0;
+  background-color: #121328;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  width: 47%;
-  @media screen and (max-width: 900px) {
-    width: 47%;
-    /* display: block; */
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
-    flex-wrap: wrap;
+  
+  /* @media screen and (max-width: 900px) {
+    display: inline-block
     background-color: #d63d3d;
-  }
+    align-items: center;
+  } */
   @media screen and (max-width: 767px) {
+    display: inline;
+     background-color: #407a35;
+
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; */
+  
     /* width: 45%; */
-    /* display: block; */
-    /* justify-content: center; */
-    /* flex-wrap: wrap; */
-    width: 100%;
-    background-color: #ffffff;
+    /* width: 100%; */
   }
   @media screen and (max-width: 575px) {
-    width: 100%;
-    display: block;
-    /* display: inline; */
-    background-color: #515897;
+    display: inline;
+    background-color: #121328;
   }
 `;
 
