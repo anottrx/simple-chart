@@ -52,14 +52,21 @@ function makeChart(id: number) {
 }
 
 function makeArray(id: number) {
-  const answerList = STATISTIC_DATA[id - 1].options.map(
-    (x) => x.optionDescription
-  );
+  const answerList = STATISTIC_DATA[id - 1].options
+    .sort((a, b) =>
+      a.rank > b.rank ? 1 : b.rank > a.rank ? -1 : 0
+    )
+    .map((x) => x.optionDescription);
   return answerList;
 }
 
 function makeArray2(id: number) {
-  const dataList = STATISTIC_DATA[id - 1].options.map((x) => x.optionCount);
+  // 원래는 도넛용인데 현재 바형태까지 사용중
+  const dataList = STATISTIC_DATA[id - 1].options.sort((a, b) =>
+      a.rank > b.rank ? 1 : b.rank > a.rank ? -1 : 0
+    ).map((x) =>
+    Math.floor(Number(x.optionCount / 90) * 100)
+  );
   return dataList;
 }
 
@@ -262,7 +269,7 @@ export default StatisticPage;
 const ChartContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  
+
   @media (max-width: 1022px) {
     display: inline;
     width: 100%;
