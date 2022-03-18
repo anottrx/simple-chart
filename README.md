@@ -1,3 +1,3 @@
-# Chart Project
+# Simple Chart Project
 
-- 사용 : TypeScript, React, react-chartjs, Emotion, MUI
+- 사용 기술 : TypeScript, Mock Service Worker, react-chartjs, chartjs-plugin-datalabel
